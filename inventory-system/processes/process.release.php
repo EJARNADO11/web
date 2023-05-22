@@ -21,7 +21,7 @@ function create_new_transaction(){
     $desc= ucwords($_POST['desc']);  
     $rid = $release->new_release($name, $desc);
     if(is_numeric($rid)){
-        header('location: ../index.php?page=release&action=release&id='.$rid);
+        header('location: ../index.php?page=transaction&subpage=real');
     }
 }
 
@@ -32,7 +32,7 @@ function new_release_item(){
     $qty= $_POST['qty']; 
     $rid = $release->new_release_item($relid, $prodid, $qty);
     if($rid){
-        header('location: ../index.php?page=release&action=release&id='.$relid);
+        header('location: ../index.php?page=transaction&subpage=release&action=release&id='.$relid);
     }
 }
 
@@ -42,6 +42,6 @@ function save_receive_items(){
     $release->save_to_released($relid);
     $rid = $release->save_release_items($relid);
     if($rid){
-        header('location: ../index.php?page=release&action=release&id='.$relid);
+        header('location: ../index.php?page=transaction&subpage=real');
     }
 }

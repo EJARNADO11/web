@@ -16,6 +16,9 @@ switch($action){
     case 'upload':
         upload();
 	break;
+    case 'delete':
+        delete_product();
+    break;
 }
 
 function create_new_type(){
@@ -44,6 +47,16 @@ function update_product(){
     $pid= $_POST['prodid']; 
     $result = $product->update_product($pname,$desc,$type,$pid);
     header('location: ../index.php?page=products&subpage=products&action=profile&id='.$pid);
+}
+function delete_product(){
+    if (isset($_POST['prodid']) && is_numeric($_POST['pid'])) {
+        $product = new Product();
+        $pid = $_POST['pid'];
+        $result = $product->delete_product($pid);
+        if ($result) {
+            header('location: ../index.php?page=products&subpage=products&action=profile&id=');
+        } 
+    }
 }
 function upload(){
     if(isset($_POST["submit"])){

@@ -62,6 +62,23 @@ class Receive{
 			return $data;	
 		}
 	}
+	public function list_receive_search($keyword){
+		
+		//$keyword = "%".$keyword."%";
+
+		$q = $this->conn->prepare('SELECT * FROM `tbl_receive` WHERE `rec_supplier` LIKE ?');
+		$q->bindValue(1, "%$keyword%", PDO::PARAM_STR);
+		$q->execute();
+
+		while($r = $q->fetch(PDO::FETCH_ASSOC)){
+		$data[]= $r;
+		}
+		if(empty($data)){
+		   return false;
+		}else{
+			return $data;	
+		}
+	}
 
 	function get_receive_supplier($id){
 		$sql="SELECT rec_supplier FROM tbl_receive WHERE rec_id = :id";	

@@ -1,3 +1,8 @@
+<?php
+ if($user == 'Staff' && $user_id_login != $id){
+    header("location: index.php?page=settings&subpage=users");
+ }
+?>
 <h3>Provide the Required Information</h3>
 <p> Complete the form below and press the create button!</p>
 <div id="form-block">

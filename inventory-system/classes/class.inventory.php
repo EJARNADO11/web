@@ -23,6 +23,23 @@ class Inventory{
 			return $data;	
 		}
 	}
+	public function list_inventory_search($keyword){
+		
+		//$keyword = "%".$keyword."%";
+
+		$q = $this->conn->prepare('SELECT * FROM `tbl_product_inv` WHERE `prod_name` LIKE ?');
+		$q->bindValue(1, "%$keyword%", PDO::PARAM_STR);
+		$q->execute();
+
+		while($r = $q->fetch(PDO::FETCH_ASSOC)){
+		$data[]= $r;
+		}
+		if(empty($data)){
+		   return false;
+		}else{
+			return $data;	
+		}
+	}
 
 	function get_product_receive_inv($id){
 		$sql="SELECT SUM(prod_qty) AS instock FROM tbl_product_inv WHERE prod_id = :id";	

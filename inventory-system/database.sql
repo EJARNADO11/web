@@ -57,6 +57,7 @@ CREATE TABLE `tbl_product` (
 
 DROP TABLE IF EXISTS `tbl_product_inv`;
 CREATE TABLE `tbl_product_inv` (
+  `prod_name` varchar(180) NOT NULL default '',
   `rec_id` int(8) NOT NULL default '0',
   `prod_id` int(8) NOT NULL default '0',
   `prod_qty` int(8) NOT NULL default '0',

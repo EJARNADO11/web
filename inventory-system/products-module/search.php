@@ -41,9 +41,16 @@ if (isset($_GET['q'])) {
         
       $count++;
     }
+
+    $hint .= '</table>';
+  } else {
+    // If no results are found, display a message
+    $hint = '<p>No results found.</p>';
   }
-  
-  $hint .= '</table>';
-  echo $hint === "" ? "No result(s)" : $hint;
+} else {
+  // If no search query is provided, display a message
+  $hint = '<p>Please enter a search query.</p>';
 }
+
+echo $hint;
 ?>

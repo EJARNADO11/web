@@ -86,3 +86,13 @@ function change_user_email(){
         header('location: ../index.php?page=settings&subpage=users&action=profile&id='.$id);
     }
 }
+function delete_user(){
+    if (isset($_POST['userid']) && is_numeric($_POST['userid'])) {
+        $user = new User();
+        $userid = $_POST['userid'];
+        $result = $user->delete_user($userid);
+        if ($result) {
+            header('location: ../index.php?page=settings&subpage=users&action=profile&id='.$id);
+        } 
+    }
+}

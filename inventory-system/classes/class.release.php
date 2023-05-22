@@ -51,6 +51,23 @@ class Release{
 			return $data;	
 		}
 	}
+	public function list_release_search($keyword){
+		
+		//$keyword = "%".$keyword."%";
+
+		$q = $this->conn->prepare('SELECT * FROM `tbl_release` WHERE `rel_customer` LIKE ?');
+		$q->bindValue(1, "%$keyword%", PDO::PARAM_STR);
+		$q->execute();
+
+		while($r = $q->fetch(PDO::FETCH_ASSOC)){
+		$data[]= $r;
+		}
+		if(empty($data)){
+		   return false;
+		}else{
+			return $data;	
+		}
+	}
 
 	function get_release_customer($id){
 		$sql="SELECT rel_customer FROM tbl_release WHERE rel_id = :id";	

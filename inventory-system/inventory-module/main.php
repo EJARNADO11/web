@@ -1,3 +1,4 @@
+<span id="search-result">
 <h3>Inventory</h3>
 <div id="subcontent">
     <table id="data-list">

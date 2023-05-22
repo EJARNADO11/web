@@ -23,8 +23,11 @@
                 case 'products':
                     require_once 'products-module/index.php';
                 break; 
-                case 'module_xxx':
-                    require_once 'module-folder/';
+                case 'profile':
+                    require_once 'receive-module/view-product.php';
+                break; 
+                 case 'release':
+                    require_once 'release-module/index.php';
                 break; 
                 default:
                     require_once 'main.php';

@@ -33,4 +33,7 @@
         <div id="button-block">
         <input type="submit" value="Save">
   </form>
+  <form method="POST" action="processes/process.product.php?action=delete">
+        <button type="submit" name="adm_username" value="<?php echo $product->get_prod_name($pid);?>"><a>Delete</a></button>
+    </form>
 </div>

@@ -1,3 +1,4 @@
+<span id="search-result">
 <h3>Receiving List</h3>
 <div id="subcontent">
     <table id="data-list">
@@ -18,7 +19,7 @@ foreach($receive->list_receive() as $value){
 ?>
       <tr>
         <td><?php echo $count;?></td>
-        <td><a href="index.php?page=receive&action=receive&id=<?php echo $rec_id;?>"><?php echo $rec_id?></a></td>
+        <td><a href="index.php?page=transaction&subpage=receive&action=receive&id=<?php echo $rec_id;?>"><?php echo $rec_id?></a></td>
         <td><?php echo $rec_date_added?></td>
         <td><?php echo $rec_supplier?></td>
         <td><?php echo $rec_description?></td>

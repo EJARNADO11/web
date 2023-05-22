@@ -178,6 +178,10 @@ textarea {
   font-family: 'Assistant', sans-serif;
     font-size: 20px;
 }
+#search-result{
+  font-size: 20px;
+  font-family: 'Playfair Display', serif;
+}
 #form-block-center {
   border-radius: 5px;
   padding: 20px;
@@ -257,6 +261,10 @@ p{
   color: white;
   font-family: 'Merriweather', serif;
   text-decoration: none;
+}
+#myChart.2d{
+  background-color: black;
+  color: white;
 }
 /** Log in */
 .login-box {
@@ -540,3 +548,17 @@ hr {
    font-family: 'Playfair Display', serif;
 }
 /*tr:nth-child(even){background-color: #f2f2f2}*/
+img{
+  border: 1px solid #000;
+  padding: 4px;
+}
+/*tr:nth-child(even){background-color: #f2f2f2}*/
+.tmbnail{
+  border: 1px solid #000;
+  border-radius: 4px;
+  padding: 5px;
+  width: 60px;
+}
+.tmbnail:hover {
+  transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
+}

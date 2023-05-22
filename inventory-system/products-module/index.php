@@ -17,7 +17,13 @@ function showResults(str) {
 </script>
 <div id="third-submenu">
     <a href="index.php?page=products&subpage=products"><i class="fa-sharp fa-regular fa-pen-to-square"></i>List of Products</a> | 
+    <?php
+    if ($user->get_user_access($user_id) != "Staff" && $id != $user_id) {
+        ?>
     <a href="index.php?page=products&subpage=products&action=create"><i class="fa-regular fa-square-plus"></i>Add Product</a> | 
+   <?php
+  }
+  ?>
     <a href="index.php?page=products&subpage=products&action=types"><i class="fa-solid fa-keyboard"></i>Product Types</a> |
        Search <input type="text" id="search" name="search" onkeyup="showResults(this.value)">
 </div>
@@ -38,6 +44,9 @@ function showResults(str) {
                 break;
                 case 'upload':
                     require_once 'products-module/imageupload.php';
+                break;
+                 case 'delete':
+                    require_once 'products-module/index.php';
                 break;
                 default:
                     require_once 'products-module/main.php';

@@ -1,3 +1,4 @@
+<span id="search-result">
 <h3>Releasing List</h3>
 <div id="subcontent">
     <table id="data-list">
@@ -19,7 +20,7 @@ foreach($release->list_release() as $value){
 ?>
       <tr>
         <td><?php echo $count;?></td>
-        <td><a href="index.php?page=release&action=release&id=<?php echo $rel_id;?>"><?php echo $rel_date_added?></a></td>
+        <td><a href="index.php?page=transaction&subpage=release&action=release&id=<?php echo $rel_id;?>"><?php echo $rel_date_added?></a></td>
         <td><?php echo $rel_id?></td>
         <td><?php echo $rel_customer?></td>
         <td><?php echo $rel_description?></td>

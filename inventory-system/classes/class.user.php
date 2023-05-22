@@ -92,6 +92,7 @@ class User{
 		return true;
 	}
 
+
 	public function change_password($id,$password){
 		
 		/* Setting Timezone for DB */
@@ -117,6 +118,16 @@ class User{
 			return $data;	
 		}
 }
+  public function delete_user($id){
+		$sql = "DELETE FROM tbl_users WHERE user_id = :id";
+		$stmt = $this->conn->prepare($sql);
+		$stmt->bindParam(':id', $id);
+		if ($stmt->execute()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 
 	function get_user_id($email){
 		$sql="SELECT user_id FROM tbl_users WHERE user_email = :email";	

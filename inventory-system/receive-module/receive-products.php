@@ -26,11 +26,23 @@
   <?php
     if($receive->get_receive_save($id) == 0){
   ?>
+  <?php
+    if ($user->get_user_access($user_id) != "Staff" && $id != $user_id) {
+        ?>
 <a class="btn-jsactive" onclick="document.getElementById('id01').style.display='block'">Add Product</a> | 
+<?php
+  }
+  ?>
+  <?php
+    if ($user->get_user_access($user_id) != "Staff" && $id != $user_id) {
+        ?>
 <a class="btn-jsactive" onclick="document.getElementById('id02').style.display='block'">Save</a>
       <?php
     }
     ?>
+    <?php
+  }
+  ?>
 </div>
 <div id="subcontent">
     <table id="data-list">

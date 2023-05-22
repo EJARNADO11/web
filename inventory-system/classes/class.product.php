@@ -120,7 +120,16 @@ public function new_product_type($tname){
 		$q->execute(array(':prod_image'=>$fname, ':prod_date_updated'=>$NOW,':prod_time_updated'=>$NOW,':prod_id'=>$id));
 		return true;
 	}
-
+   public function delete_product($id){
+		$sql = "DELETE FROM tbl_product WHERE prod_id = :id";
+		$stmt = $this->conn->prepare($sql);
+		$stmt->bindParam(':id', $id);
+		if ($stmt->execute()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
 	public function list_types(){
 		$sql="SELECT * FROM tbl_type";
 		$q = $this->conn->query($sql) or die("failed!");
