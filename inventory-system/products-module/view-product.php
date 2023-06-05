@@ -14,7 +14,8 @@
 
             <label for="lname">Description</label>
             <textarea id="desc" class="input" name="desc" placeholder="Description.."><?php echo $product->get_prod_desc($id);?></textarea>
-          
+          <label for="price">Product Price</label>
+            <input type="number" id="price" class="input" name="price" placeholder="Product Price.."> 
             <input type="hidden" id="prodid" name="prodid" value="<?php echo $id;?>"/>
             <label for="ptype">Type</label>
             <select id="ptype" name="ptype">
@@ -31,9 +32,9 @@
         </select>
               </div>
         <div id="button-block">
-        <input type="submit" value="Save">
+        <input type="submit" value="Update">
   </form>
   <form method="POST" action="processes/process.product.php?action=delete">
-        <button type="submit" name="adm_username" value="<?php echo $product->get_prod_name($pid);?>"><a>Delete</a></button>
+        <button type="submit" name="prod_id" value="<?php echo $product->get_prod_id($id);?>"><a>Delete</a></button>
     </form>
 </div>
