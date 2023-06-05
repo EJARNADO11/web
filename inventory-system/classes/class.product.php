@@ -10,44 +10,16 @@ class Product{
 		
 	}
 	
-public function new_product_type($tname){
-		
-	/* Setting Timezone for DB */
-	$NOW = new DateTime('now', new DateTimeZone('Asia/Manila'));
-	$NOW = $NOW->format('Y-m-d H:i:s');
-
-	$data = [
-		[$tname,$NOW,$NOW,'1'],
-	];
-	$stmt = $this->conn->prepare("INSERT INTO tbl_type (type_name, type_date_added, type_time_added, type_status) VALUES (?,?,?,?)");
-	try {
-		$this->conn->beginTransaction();
-		foreach ($data as $row)
-		{
-			$stmt->execute($row);
-		}
-		$id= $this->conn->lastInsertId();
-		$this->conn->commit();
-		
-	}catch (Exception $e){
-		$this->conn->rollback();
-		throw $e;
-	}
-
-	return $id;
-
-	}
-
-	public function new_product($pname,$desc,$type){
+	public function new_product_type($tname){
 		
 		/* Setting Timezone for DB */
 		$NOW = new DateTime('now', new DateTimeZone('Asia/Manila'));
 		$NOW = $NOW->format('Y-m-d H:i:s');
-	
+
 		$data = [
-			[$pname,$desc,$NOW,$NOW,'1',$type],
+			[$tname,$NOW,$NOW,'1'],
 		];
-		$stmt = $this->conn->prepare("INSERT INTO tbl_product(prod_name, prod_description, prod_date_added, prod_time_added, prod_status, type_id) VALUES (?,?,?,?,?,?)");
+		$stmt = $this->conn->prepare("INSERT INTO tbl_type (type_name, type_date_added, type_time_added, type_status) VALUES (?,?,?,?)");
 		try {
 			$this->conn->beginTransaction();
 			foreach ($data as $row)
@@ -61,20 +33,46 @@ public function new_product_type($tname){
 			$this->conn->rollback();
 			throw $e;
 		}
-	
+
 		return $id;
-	
-		}
+
+	}
+
+	public function new_product($pname,$desc, $price, $type)
+{
+    // Setting Timezone for DB
+    $timezone = new DateTimeZone('Asia/Manila');
+    $now = new DateTime('now', $timezone);
+    $now = $now->format('Y-m-d H:i:s');
+
+    $data = [
+        [$pname,$desc, $price, '1', $type],
+    ];
+    $stmt = $this->conn->prepare("INSERT INTO tbl_product(prod_name, prod_description,prod_price, prod_status, type_id) VALUES (?,?,?,?,?)");
+    try {
+        $this->conn->beginTransaction();
+        foreach ($data as $row) {
+            $stmt->execute($row);
+        }
+        $id = $this->conn->lastInsertId();	
+        $this->conn->commit();
+    } catch (PDOException $e) {
+        $this->conn->rollBack();
+        throw $e;
+    }
+
+    return $id;
+}
 
 
 	public function list_product_type(){
 		$sql="SELECT * FROM tbl_type";
 		$q = $this->conn->query($sql) or die("failed!");
 		while($r = $q->fetch(PDO::FETCH_ASSOC)){
-		$data[]=$r;
+			$data[]=$r;
 		}
 		if(empty($data)){
-		   return false;
+			return false;
 		}else{
 			return $data;	
 		}
@@ -88,10 +86,10 @@ public function new_product_type($tname){
 		$q->execute();
 
 		while($r = $q->fetch(PDO::FETCH_ASSOC)){
-		$data[]= $r;
+			$data[]= $r;
 		}
 		if(empty($data)){
-		   return false;
+			return false;
 		}else{
 			return $data;	
 		}
@@ -100,10 +98,10 @@ public function new_product_type($tname){
 		$sql="SELECT * FROM tbl_product";
 		$q = $this->conn->query($sql) or die("failed!");
 		while($r = $q->fetch(PDO::FETCH_ASSOC)){
-		$data[]=$r;
+			$data[]=$r;
 		}
 		if(empty($data)){
-		   return false;
+			return false;
 		}else{
 			return $data;	
 		}
@@ -120,7 +118,33 @@ public function new_product_type($tname){
 		$q->execute(array(':prod_image'=>$fname, ':prod_date_updated'=>$NOW,':prod_time_updated'=>$NOW,':prod_id'=>$id));
 		return true;
 	}
-   public function delete_product($id){
+	public function list_types(){
+		$sql="SELECT * FROM tbl_type";
+		$q = $this->conn->query($sql) or die("failed!");
+		while($r = $q->fetch(PDO::FETCH_ASSOC)){
+			$data[]=$r;
+		}
+		if(empty($data)){
+			return false;
+		}else{
+			return $data;	
+		}
+	}
+	public function update_product($pname,$desc,$price, $ptype, $id){
+		
+		/* Setting Timezone for DB */
+		$NOW = new DateTime('now', new DateTimeZone('Asia/Manila'));
+		$NOW = $NOW->format('Y-m-d H:i:s');
+
+		$sql = "UPDATE tbl_product SET prod_name=:prod_name,prod_description=:prod_description,:prod_price=prod_price,prod_date_updated=:prod_date_updated,prod_time_updated=:prod_time_updated,type_id=:type_id WHERE prod_id=:prod_id";
+
+		$q = $this->conn->prepare($sql);
+		$q->execute(array(':prod_name'=>$pname, ':prod_description'=>$desc,'
+            :prod_price'=>$price,'
+			:prod_date_updated'=>$NOW,':prod_time_updated'=>$NOW,':type_id'=>$ptype,':prod_id'=>$id));
+		return true;
+	}
+	public function delete_product($id){
 		$sql = "DELETE FROM tbl_product WHERE prod_id = :id";
 		$stmt = $this->conn->prepare($sql);
 		$stmt->bindParam(':id', $id);
@@ -130,33 +154,16 @@ public function new_product_type($tname){
 			return false;
 		}
 	}
-	public function list_types(){
-		$sql="SELECT * FROM tbl_type";
-		$q = $this->conn->query($sql) or die("failed!");
-		while($r = $q->fetch(PDO::FETCH_ASSOC)){
-		$data[]=$r;
-		}
-		if(empty($data)){
-		   return false;
-		}else{
-			return $data;	
-		}
-	}
-	public function update_product($pname,$desc, $ptype, $id){
-		
-		/* Setting Timezone for DB */
-		$NOW = new DateTime('now', new DateTimeZone('Asia/Manila'));
-		$NOW = $NOW->format('Y-m-d H:i:s');
-
-		$sql = "UPDATE tbl_product SET prod_name=:prod_name,prod_description=:prod_description,prod_date_updated=:prod_date_updated,prod_time_updated=:prod_time_updated,type_id=:type_id WHERE prod_id=:prod_id";
-
+	function get_prod_id($id){
+		$sql="SELECT prod_id FROM tbl_product WHERE prod_id = :id";	
 		$q = $this->conn->prepare($sql);
-		$q->execute(array(':prod_name'=>$pname, ':prod_description'=>$desc,':prod_date_updated'=>$NOW,':prod_time_updated'=>$NOW,':type_id'=>$ptype,':prod_id'=>$id));
-		return true;
+		$q->execute(['id' => $id]);
+		$prod_name = $q->fetchColumn();
+		return $prod_name;
 	}
 	function get_prod_name($id){
-		$sql="SELECT prod_name FROM tbl_product WHERE prod_id = :id";	
-		$q = $this->conn->prepare($sql);
+		$sql="SELECT prod_name FROM tbl_product WHERE prod_id = :id";
+    	$q = $this->conn->prepare($sql);
 		$q->execute(['id' => $id]);
 		$prod_name = $q->fetchColumn();
 		return $prod_name;
@@ -183,7 +190,14 @@ public function new_product_type($tname){
 		$type_name = $q->fetchColumn();
 		return $type_name;
 	}
-	
+	function get_prod_price($id)
+	{
+		$sql = "SELECT prod_price FROM tbl_product WHERE prod_id = :id";
+		$q = $this->conn->prepare($sql);
+		$q->execute(['id' => $id]);
+		$prod_price = $q->fetchColumn();
+		return $prod_price;
+	}
 	function get_prod_image($id){
 		$sql="SELECT prod_image FROM tbl_product WHERE prod_id = :id";	
 		$q = $this->conn->prepare($sql);
@@ -191,6 +205,4 @@ public function new_product_type($tname){
 		$prod_image = $q->fetchColumn();
 		return $prod_image;
 	}
-	
-	
 }
