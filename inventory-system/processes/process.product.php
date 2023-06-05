@@ -32,9 +32,10 @@ function create_new_type(){
 function create_new(){
 	$product = new Product();
     $pname= ucwords($_POST['pname']);  
-    $desc= ucwords($_POST['desc']);      
+    $desc= ucwords($_POST['desc']);
+    $price=ucwords($_POST['price']);      
     $type= $_POST['ptype'];  
-    $pid = $product->new_product($pname,$desc,$type);
+    $pid = $product->new_product($pname,$desc,$price,$type);
     if(is_numeric($pid)){
         header('location: ../index.php?page=products&subpage=products&action=profile&id='.$pid);
     }
@@ -42,19 +43,20 @@ function create_new(){
 function update_product(){
 	$product = new Product();
     $pname= ucwords($_POST['pname']);  
-    $desc= ucwords($_POST['desc']);   
+    $desc= ucwords($_POST['desc']); 
+    $price=$_POST['price'];  
     $type= $_POST['ptype'];  
     $pid= $_POST['prodid']; 
-    $result = $product->update_product($pname,$desc,$type,$pid);
+    $result = $product->update_product($pname,$desc,$price,$type,$pid);
     header('location: ../index.php?page=products&subpage=products&action=profile&id='.$pid);
 }
 function delete_product(){
-    if (isset($_POST['prodid']) && is_numeric($_POST['pid'])) {
+    if (isset($_POST['prod_id'])){
         $product = new Product();
-        $pid = $_POST['pid'];
+        $pid = $_POST['prod_id'];
         $result = $product->delete_product($pid);
         if ($result) {
-            header('location: ../index.php?page=products&subpage=products&action=profile&id=');
+             header('location: ../index.php?page=products');
         } 
     }
 }
