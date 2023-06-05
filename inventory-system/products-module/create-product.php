@@ -16,16 +16,14 @@ if($user == 'Staff' && $user_id_login != $id) {
 
             <label for="lname">Description</label>
             <textarea id="desc" class="input" name="desc" placeholder="Description.."></textarea>
+
+            <label for="price">Product Price</label>
+            <input type="number" id="price" class="input" name="price" placeholder="Product Price.."> 
            
 
-           <?php
-    if ($user->get_user_access($user_id) != "Staff" && $id != $user_id) {
-        ?>
             <label for="ptype">Product Type</label>
             <select id="ptype" name="ptype">
-        <?php
-    }
-    ?> 
+    
               <?php
               if($product->list_types() != false){
                 foreach($product->list_types() as $value){
